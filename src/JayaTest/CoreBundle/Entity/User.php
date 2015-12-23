@@ -2,51 +2,61 @@
 
 namespace JayaTest\CoreBundle\Entity;
 
-use FOS\UserBundle\Model\User as BaseUser;
-
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
+ 
 /**
  * @ORM\Entity
  * @ORM\Table(name="user")
  */
-class User
+class User implements UserInterface
 {
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
+     *
+     * @var integer $id
      */
     protected $id;
-
+ 
     /**
-     * @var string
-     */
-    protected $userName;
-
-    /**
-     * @var string
-     */
-    private $userEmail;
-
-    /**
-     * @var string
-     */
-    private $password;
-
-    /**
-     * @var \DateTime
-     */
-    private $createdAt;
-
-    /**
-     * @var boolean
-     */
-    private $status;
-
-
-    /**
-     * Get id
+     * @ORM\Column(type="string", length="255")
      *
-     * @return integer
+     * @var string username
+     */
+    protected $username;
+ 
+    /**
+     * @ORM\Column(type="string", length="255")
+     *
+     * @var string password
+     */
+    protected $password;
+ 
+    /**
+     * @ORM\Column(type="string", length="255")
+     *
+     * @var string salt
+     */
+    protected $salt;
+ 
+    /**
+     * @ORM\ManyToMany(targetEntity="Role")
+     * @ORM\JoinTable(name="user_role",
+     *     joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="role_id", referencedColumnName="id")}
+     * )
+     *
+     * @var ArrayCollection $userRoles
+     */
+    protected $userRoles;
+ 
+    /**
+     * Геттер для id.
+     *
+     * @return integer The id.
      */
     public function getId()
     {
@@ -54,123 +64,112 @@ class User
     }
 
     /**
-     * Set userName
+     * Геттер для имени пользователя.
      *
-     * @param string $userName
-     *
-     * @return User
+     * @return string The username.
      */
-    public function setUserName($userName)
+    public function getUsername()
     {
-        $this->userName = $userName;
-
-        return $this;
+        return $this->username;
     }
-
+ 
     /**
-     * Get userName
+     * Сеттер для имени пользователя.
      *
-     * @return string
+     * @param string $value The username.
      */
-    public function getUserName()
+    public function setUsername($value)
     {
-        return $this->userName;
+        $this->username = $value;
     }
-
+ 
     /**
-     * Set userEmail
+     * Геттер для пароля.
      *
-     * @param string $userEmail
-     *
-     * @return User
-     */
-    public function setUserEmail($userEmail)
-    {
-        $this->userEmail = $userEmail;
-
-        return $this;
-    }
-
-    /**
-     * Get userEmail
-     *
-     * @return string
-     */
-    public function getUserEmail()
-    {
-        return $this->userEmail;
-    }
-
-    /**
-     * Set password
-     *
-     * @param string $password
-     *
-     * @return User
-     */
-    public function setPassword($password)
-    {
-        $this->password = $password;
-
-        return $this;
-    }
-
-    /**
-     * Get password
-     *
-     * @return string
+     * @return string The password.
      */
     public function getPassword()
     {
         return $this->password;
     }
-
+ 
     /**
-     * Set createdAt
+     * Сеттер для пароля.
      *
-     * @param \DateTime $createdAt
-     *
-     * @return User
+     * @param string $value The password.
      */
-    public function setCreatedAt($createdAt)
+    public function setPassword($value)
     {
-        $this->createdAt = $createdAt;
-
-        return $this;
+        $this->password = $value;
     }
-
+ 
     /**
-     * Get createdAt
+     * Геттер для соли к паролю.
      *
-     * @return \DateTime
+     * @return string The salt.
      */
-    public function getCreatedAt()
+    public function getSalt()
     {
-        return $this->createdAt;
+        return $this->salt;
     }
-
+ 
     /**
-     * Set status
+     * Сеттер для соли к паролю.
      *
-     * @param boolean $status
-     *
-     * @return User
+     * @param string $value The salt.
      */
-    public function setStatus($status)
+    public function setSalt($value)
     {
-        $this->status = $status;
-
-        return $this;
+        $this->salt = $value;
     }
-
+ 
     /**
-     * Get status
+     * Геттер для ролей пользователя.
      *
-     * @return boolean
+     * @return ArrayCollection A Doctrine ArrayCollection
      */
-    public function getStatus()
+    public function getUserRoles()
     {
-        return $this->status;
+        return $this->userRoles;
+    }
+ 
+    /**
+     * Конструктор класса User
+     */
+    public function __construct()
+    {
+        $this->posts = new ArrayCollection();
+        $this->userRoles = new ArrayCollection();
+        $this->createdAt = new \DateTime();
+    }
+ 
+    /**
+     * Сброс прав пользователя.
+     */
+    public function eraseCredentials()
+    {
+ 
+    }
+ 
+    /**
+     * Геттер для массива ролей.
+     * 
+     * @return array An array of Role objects
+     */
+    public function getRoles()
+    {
+        return $this->getUserRoles()->toArray();
+    }
+ 
+    /**
+     * Сравнивает пользователя с другим пользователем и определяет
+     * один и тот же ли это человек.
+     * 
+     * @param UserInterface $user The user
+     * @return boolean True if equal, false othwerwise.
+     */
+    public function equals(UserInterface $user)
+    {
+        return md5($this->getUsername()) == md5($user->getUsername());
     }
 }
-

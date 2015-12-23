@@ -4,7 +4,13 @@
 
     <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.css') }}">
 </head>
-
+<body>
+{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+Вошел как {{ app.user.username }} | <a href="{{ path('_security_logout') }}">Выход</a>
+{% else %}
+<a href="{{ path('_security_login') }}">Вход</a> | <a href="{{ path('jaya_test_register') }}">Регистрация</a>
+<hr/>
+{% endif %}
 {% block content %}
 
 {% endblock %}

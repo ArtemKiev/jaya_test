@@ -18,12 +18,12 @@ class DefaultController extends Controller
     {
         $item = isset($itemEntity) && $itemEntity instanceof Item ? $itemEntity : new Item();
 
-        $form = $this->createFormBuilder($item)
+        $form = $this->createFormBuilder($item, ['attr' => ['class' => 'form-inline']])
             ->setAction($this->generateUrl('jaya_test_create_item'))
-            ->add('username', 'text', ['label' => 'Имя'])
-            ->add('useremail', 'email', ['label' => 'E-Mail'])
-            ->add('message', 'textarea', ['label' => 'Сообщение'])
-            ->add('save', 'submit', ['label' => 'Добавить сообщение'])
+            ->add('username', 'text', ['label' => 'Имя', 'attr' => ['class' => 'form-control']])
+            ->add('useremail', 'email', ['label' => 'E-Mail', 'attr' => ['class' => 'form-control']])
+            ->add('message', 'textarea', ['label' => 'Сообщение', 'attr' => ['class' => 'form-control']])
+            ->add('save', 'submit', ['label' => 'Добавить сообщение', 'attr' => ['class' => 'btn btn-primary']])
             ->getForm();
 
         return $form;
@@ -71,17 +71,5 @@ class DefaultController extends Controller
         } else {
             return $this->redirectToRoute('jaya_test_web_homepage');
         }
-    }
-
-    public function registerAction(Request $request)
-    {
-        $user = new User();
-
-        $form = $this->createFormBuilder($user)
-            ->add('username', 'text', ['label' => 'Имя'])
-            ->add('useremail', 'email', ['label' => 'E-Mail'])
-            ->add('password', 'password', ['label' => 'Пароль'])
-            ->add('save', 'submit', ['label' => 'Зарегистрироваться'])
-            ->getForm();
     }
 }
