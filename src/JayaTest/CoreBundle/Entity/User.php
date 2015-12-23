@@ -22,21 +22,28 @@ class User implements UserInterface
     protected $id;
  
     /**
-     * @ORM\Column(type="string", length="255")
+     * @ORM\Column(type="string", length=255, name="user_name")
      *
-     * @var string username
+     * @var string userName
      */
-    protected $username;
+    protected $userName;
+
+    /**
+     * @ORM\Column(type="string", length=255, name="user_email")
+     *
+     * @var string userEmail
+     */
+    protected $userEmail;
  
     /**
-     * @ORM\Column(type="string", length="255")
+     * @ORM\Column(type="string", length=255)
      *
      * @var string password
      */
     protected $password;
  
     /**
-     * @ORM\Column(type="string", length="255")
+     * @ORM\Column(type="string", length=255)
      *
      * @var string salt
      */
@@ -54,6 +61,20 @@ class User implements UserInterface
     protected $userRoles;
  
     /**
+     * @ORM\Column(type="datetime", name="created_at")
+     *
+     * @var DateTime $createdAt
+     */
+    protected $createdAt;
+
+    /**
+     * @ORM\Column(type="integer")
+     *
+     * @var integer $status
+     */
+    protected $status;
+
+    /**
      * Геттер для id.
      *
      * @return integer The id.
@@ -66,21 +87,60 @@ class User implements UserInterface
     /**
      * Геттер для имени пользователя.
      *
-     * @return string The username.
+     * @return string The userName.
      */
-    public function getUsername()
+    public function getUserName()
     {
-        return $this->username;
+        return $this->userName;
     }
  
     /**
      * Сеттер для имени пользователя.
      *
-     * @param string $value The username.
+     * @param string $value The userName.
      */
-    public function setUsername($value)
+    public function setUserName($value)
     {
-        $this->username = $value;
+        $this->userName = $value;
+    }
+
+    /**
+     * Геттер для электронки
+     *
+     * @return string The userEmail.
+     */
+    public function getUserEmail()
+    {
+        return $this->userEmail;
+    }
+ 
+    /**
+     * Сеттер для электронки
+     *
+     * @param string $value The userEmail.
+     */
+    public function setUserEmail($value)
+    {
+        $this->userEmail = $value;
+    }
+
+    /**
+     * Геттер для даты создания
+     *
+     * @return string The createdAt.
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+ 
+    /**
+     * Сеттер для даты создания
+     *
+     */
+    public function setCreatedAt()
+    {
+        $this->createdAt = new \DateTime();
     }
  
     /**
@@ -103,6 +163,26 @@ class User implements UserInterface
         $this->password = $value;
     }
  
+    /**
+     * Геттер для статуса.
+     *
+     * @return string The status.
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+ 
+    /**
+     * Сеттер для статуса.
+     *
+     * @param string $value The status.
+     */
+    public function setStatus($value)
+    {
+        $this->status = $value;
+    }
+
     /**
      * Геттер для соли к паролю.
      *
@@ -170,6 +250,6 @@ class User implements UserInterface
      */
     public function equals(UserInterface $user)
     {
-        return md5($this->getUsername()) == md5($user->getUsername());
+        return md5($this->getUserName()) == md5($user->getUserName());
     }
 }

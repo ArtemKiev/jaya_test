@@ -34,7 +34,7 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        $items = $this->getDoctrine()->getManager()->getRepository('JayaTestCoreBundle:Item')->findAll();
+        $items = $this->getDoctrine()->getManager()->getRepository('JayaTestCoreBundle:Item')->findBy([], ['createdAt' => 'DESC']);
 
         $form = $this->getAddForm();
 
@@ -59,10 +59,10 @@ class DefaultController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $formData = $request->get('form');
-            $item->setUserName($formData['username']);
+            $item->setUsername($formData['username']);
             $item->setUserEmail($formData['useremail']);
             $item->setMessage($formData['message']);
-            $item->setCreatedAt(new \DateTime());
+            $item->setCreatedAt();
 
             $this->getDoctrine()->getManager()->persist($item);
             $this->getDoctrine()->getManager()->flush();
