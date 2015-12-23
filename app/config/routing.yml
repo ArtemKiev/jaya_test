@@ -1,3 +1,7 @@
-app:
-    resource: "@AppBundle/Controller/"
-    type:     annotation
+jaya_test_web:
+    resource: "@JayaTestWebBundle/Resources/config/routing.yml"
+    prefix:   /
+
+jaya_test_core:
+    resource: "@JayaTestCoreBundle/Resources/config/routing.yml"
+    prefix:   /

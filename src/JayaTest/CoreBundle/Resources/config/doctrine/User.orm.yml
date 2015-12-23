@@ -1,0 +1,25 @@
+JayaTest\CoreBundle\Entity\User:
+    type: entity
+    table: null
+    repositoryClass: JayaTest\CoreBundle\Entity\UserRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        userName:
+            type: string
+            length: 255
+        userEmail:
+            type: string
+            length: 255
+        password:
+            type: string
+            length: '32'
+        createdAt:
+            type: datetime
+        status:
+            type: boolean
+    lifecycleCallbacks: {  }

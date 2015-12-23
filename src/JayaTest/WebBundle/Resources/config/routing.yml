@@ -1,0 +1,11 @@
+jaya_test_web_homepage:
+    path:     /
+    defaults: { _controller: JayaTestWebBundle:Default:index }
+
+jaya_test_create_item:
+    path:     /create
+    defaults: { _controller: JayaTestWebBundle:Default:new }
+
+jaya_test_register:
+    path:     /register
+    defaults: { _controller: JayaTestWebBundle:Default:register }

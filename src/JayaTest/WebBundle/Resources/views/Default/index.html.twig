@@ -1,0 +1,12 @@
+{% extends "JayaTestWebBundle::base.html.twig" %}
+{% block content %}
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+
+{% for item in items %}
+    [{{ item.createdAt | date("d.m.Y H:i:s") }}] <strong>{{ item.userName }}</strong>: {{ item.message }}<br/>
+{% endfor %}
+
+{% endblock %}

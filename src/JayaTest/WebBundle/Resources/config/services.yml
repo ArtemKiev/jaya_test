@@ -1,0 +1,4 @@
+services:
+#    jaya_test_web.example:
+#        class: JayaTest\WebBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]

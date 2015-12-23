@@ -1,0 +1,3 @@
+jaya_test_core_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: JayaTestCoreBundle:Default:index }

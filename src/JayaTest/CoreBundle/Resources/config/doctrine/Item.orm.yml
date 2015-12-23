@@ -1,0 +1,22 @@
+JayaTest\CoreBundle\Entity\Item:
+    type: entity
+    table: null
+    repositoryClass: JayaTest\CoreBundle\Entity\ItemRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        userName:
+            type: string
+            length: 255
+        userEmail:
+            type: string
+            length: 255
+        message:
+            type: text
+        createdAt:
+            type: datetime
+    lifecycleCallbacks: {  }
